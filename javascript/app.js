@@ -193,10 +193,10 @@ document.addEventListener("DOMContentLoaded", function () {
             circle1.x -= 2;
         }
         if (downPressed) {
-            circle1.velocity.y = 1;
+            circle1.velocity.y = 2;
             circle1.y += 2;
         } else if (upPressed) {
-            circle1.velocity.y = -1;
+            circle1.velocity.y = -2;
             circle1.y -= 2;
         }
 
