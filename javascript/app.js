@@ -43,6 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
             c.beginPath();
             c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
             c.strokeStyle = 'blue';
+            c.lineWidth = 0.01;
             c.fillStyle = 'green';
             c.globalCompositeOperation = 'destination-over';
             c.fill();
@@ -60,6 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (getDistance(this.x, this.y, circles[i].x, circles[i].y) <= this.radius + circles[i].radius) {
 
                     resolveCollisions(this, circles[i]);
+
                 }
             }
 
@@ -85,16 +87,115 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (this.x + this.radius > innerWidth) {
                     this.velocity.x = -this.velocity.x
                     player1Score += 1;
-                    console.log(player1Score);
-                    console.log(player2Score);
                 }
                 if (this.x - this.radius < 0) {
                     this.velocity.x = -this.velocity.x
                     player2Score += 1;
-                    console.log(player1Score);
-                    console.log(player2Score);
                 }
 
+
+
+
+                if (rightPressed) {
+                    if (circle1.x + circle1.radius < 0.5 * innerWidth - 5) {
+                        circle1.x += 5;
+                        circle1.update();
+                    }
+                    // if (0.5 * innerWidth - circle1.x - circle1.radius < 5) {
+                    //     circle1.x = 0.5 * innerWidth - circle1.radius;
+                    //     circle1.velocity.x = 0.5 * innerWidth - circle1.x - circle1.radius;
+                    //     circle1.update();
+                    // } else {
+                    //     circle1.velocity.x = 5;
+                    //     circle1.update();
+
+                    // }
+                } else if (leftPressed) {
+                    if (circle1.x - circle1.radius > 5) {
+                        circle1.x -= 5;
+                        circle1.update();
+                    }
+                    // if (circle1.x - circle1.radius < 5) {
+                    //     circle1.x = circle1.radius;
+                    //     circle1.velocity.x = circle1.radius - circle1.x - 1;
+                    //     circle1.update();
+                    // } else {
+                    //     circle1.velocity.x = -5;
+                    //     circle1.update();
+                    // }
+
+                }
+                if (downPressed) {
+                    if (circle1.y + circle1.radius < innerHeight - 5) {
+                        circle1.y += 5;
+                    }
+                    // if (innerHeight - circle1.y - circle1.radius < 5) {
+                    //     circle1.y = innerHeight - circle1.radius - 1;
+                    //     circle1.velocity.y = innerHeight - circle1.y - circle1.radius - 1;
+                    //     circle1.update();
+                    // } else {
+                    //     circle1.velocity.y = 5;
+                    //     circle1.update();
+                    // }
+
+
+                } else if (upPressed) {
+                    if (circle1.y - circle1.radius > 5) {
+                        circle1.y -= 5;
+                    }
+                    // if (circle1.y - circle1.radius < 5) {
+                    //     circle1.y = circle1.radius + 1;
+                    //     circle1.velocity.y = circle1.radius - circle1.y;
+                    //     circle1.update();
+                    // } else {
+                    //     circle1.velocity.y = -5;
+                    //     circle1.update();
+                    // }
+
+                }
+                if (upPressed && rightPressed) {
+                    circle1.velocity.y = -0.5 * Math.sqrt(50);
+                    circle1.velocity.x = -0.5 * Math.sqrt(50);
+                } else {
+                    circle1.velocity.x = 0;
+                    circle1.velocity.y = 0;
+                    circle1.update();
+                    // score();
+
+
+                }
+
+
+
+                // Player 2 control functions
+                if (rightPressed2) {
+
+                    circle2.velocity.x = 5;
+                    circle2.update();
+                } else if (leftPressed2) {
+
+                    circle2.velocity.x = -5;
+                    circle2.update();
+
+
+                }
+                if (downPressed2) {
+
+                    circle2.velocity.y = 5;
+                    circle2.update();
+
+
+                } else if (upPressed2) {
+
+                    circle2.velocity.y = -5;
+                    circle2.update();
+
+                } else {
+                    circle2.velocity.x = 0;
+                    circle2.velocity.y = 0;
+                    circle2.update();
+
+                }
             }
 
 
@@ -297,68 +398,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // circle2.update();
         // circle3.update();
 
-        if (rightPressed) {
 
-            circle1.velocity.x = 5;
-            circle1.update();
-        } else if (leftPressed) {
-
-            circle1.velocity.x = -5;
-            circle1.update();
-
-
-        }
-        if (downPressed) {
-
-            circle1.velocity.y = 5;
-            circle1.update();
-
-
-        } else if (upPressed) {
-
-            circle1.velocity.y = -5;
-            circle1.update();
-
-        } else {
-            circle1.velocity.x = 0;
-            circle1.velocity.y = 0;
-            circle1.update();
-            // score();
-
-
-        }
-
-
-
-        // Player 2 control functions
-        if (rightPressed2) {
-
-            circle2.velocity.x = 5;
-            circle2.update();
-        } else if (leftPressed2) {
-
-            circle2.velocity.x = -5;
-            circle2.update();
-
-
-        }
-        if (downPressed2) {
-
-            circle2.velocity.y = 5;
-            circle2.update();
-
-
-        } else if (upPressed2) {
-
-            circle2.velocity.y = -5;
-            circle2.update();
-
-        } else {
-            circle2.velocity.x = 0;
-            circle2.velocity.y = 0;
-            circle2.update();
-
-        }
 
         // circle1.update();
         circle2.update();
