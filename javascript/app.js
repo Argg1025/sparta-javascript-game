@@ -6,14 +6,26 @@ document.addEventListener("DOMContentLoaded", function () {
     canvas.height = window.innerHeight;
 
     const c = canvas.getContext('2d');
+    const d = canvas.getContext('2d');
+    const e = canvas.getContext('2d');
+    const f = canvas.getContext('2d');
 
-
+    const player1 = 'Player 1',
+        player2 = 'Player 2';
     // function randomColorGenerator() {
     //     return `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}`
     // }
 
     // Objects
 
+
+    function drawRink() {
+        d.beginPath();
+        d.strokeStyle = 'red';
+        d.lineWidth = 10;
+        d.arc(0.5 * innerWidth, 0.5 * innerHeight, 100, 0, 2 * Math.PI, false);
+        d.stroke();
+    }
 
     function Circle(x, y, dx, dy, radius, mass) {
         this.x = x;
@@ -32,9 +44,14 @@ document.addEventListener("DOMContentLoaded", function () {
             c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
             c.strokeStyle = 'blue';
             c.fillStyle = 'green';
+            c.globalCompositeOperation = 'destination-over';
             c.fill();
             c.stroke();
         }
+
+
+
+        // Drawing on the air hockey rink with canvas
 
         this.update = function () {
 
@@ -53,19 +70,16 @@ document.addEventListener("DOMContentLoaded", function () {
             }
             if (this === circles[0]) {
                 if (this.x + this.radius > innerWidth * 0.5 || this.x - this.radius < 0) {
-                    this.velocity.x = -this.velocity.x
+                    this.velocity.x = -this.velocity.x;
+
                 }
-                if (this.y + this.radius > innerHeight || this.y - this.radius < 0) {
-                    this.velocity.y = -this.velocity.y
-                }
+
             }
             if (this === circles[1]) {
                 if (this.x + this.radius > innerWidth || this.x - this.radius < innerWidth - 0.5 * innerWidth) {
                     this.velocity.x = -this.velocity.x
                 }
-                if (this.y + this.radius >= innerHeight || this.y - this.radius < 0) {
-                    this.velocity.y = -this.velocity.y
-                }
+
             }
             if (this === circles[2]) {
                 if (this.x + this.radius > innerWidth) {
@@ -81,9 +95,26 @@ document.addEventListener("DOMContentLoaded", function () {
                     console.log(player2Score);
                 }
 
-
-
             }
+
+
+
+            // player2
+
+            d.fillStyle = 'purple';
+            d.font = "30px Arial";
+            d.fillText(`${player1} `, 0.5 * innerWidth -
+                170, 50);
+
+            e.fillStyle = 'red';
+            e.font = "30px Arial";
+            e.fillText(`${player1Score} - ${player2Score} `, 0.5 * innerWidth - 30, 50);
+
+            f.fillStyle = 'blue';
+            f.font = "30px Arial";
+            f.fillText(`${player2}`, 0.5 * innerWidth + 70, 50);
+
+
 
 
 
@@ -167,8 +198,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Instantiating the circles
     let circles = [];
-    const circle1 = new Circle(100, 100, 0, 0, 100, 20);
-    const circle2 = new Circle(900, 300, 0, 0, 100, 20);
+    const circle1 = new Circle(150, 0.5 * innerHeight, 0, 0, 100, 20);
+    const circle2 = new Circle(innerWidth - 150, 0.5 * innerHeight, 0, 0, 100, 20);
     const circle3 = new Circle(300, 400, -10, 5, 50, 1);
 
 
@@ -252,9 +283,13 @@ document.addEventListener("DOMContentLoaded", function () {
         requestAnimationFrame(animate);
         c.clearRect(0, 0, innerWidth, innerHeight);
 
+
+
         circle1.drawCircle();
         circle2.drawCircle();
         circle3.drawCircle();
+
+        drawRink();
 
         //Control Functionality. In this case it adds a velocity depending on which control is pressed. For player 1.
 
@@ -354,7 +389,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-
+    drawRink();
     animate();
 
 
