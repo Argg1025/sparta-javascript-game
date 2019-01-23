@@ -20,11 +20,38 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     function drawRink() {
+
+
+
+
         d.beginPath();
         d.strokeStyle = 'red';
         d.lineWidth = 10;
-        d.arc(0.5 * innerWidth, 0.5 * innerHeight, 100, 0, 2 * Math.PI, false);
+        d.arc(0.5 * innerWidth, 0.5 * innerHeight, 200, 0, 2 * Math.PI, false);
         d.stroke();
+
+        // 
+
+        d.beginPath();
+        d.strokeStyle = 'blue';
+        d.arc(innerWidth, 0.5 * innerHeight, 200, 0, 2 * Math.PI, false);
+        d.stroke();
+        d.closePath();
+
+        d.beginPath();
+        d.arc(0, 0.5 * innerHeight, 200, 0, 2 * Math.PI, false);
+        d.stroke();
+        d.closePath();
+
+        d.beginPath();
+        d.moveTo(0.5 * innerWidth, 0);
+        d.lineTo(0.5 * innerWidth, innerHeight);
+        d.stroke();
+
+
+
+
+
     }
 
     function Circle(x, y, dx, dy, radius, mass) {
@@ -80,66 +107,85 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (this.x + this.radius > innerWidth) {
                     this.velocity.x = -this.velocity.x
                     player1Score += 1;
+                    this.x = circle2.x - circle3.radius;
+                    this.y = circle2.y;
+                    this.velocity.x = -10;
+                    if (this.y > circle2.y) {
+                        this.velocity.y = 5;
+                    } else {
+                        this.velocity.y = -5;
+                    }
+
+
+
                 }
                 if (this.x - this.radius < 0) {
                     this.velocity.x = -this.velocity.x
                     player2Score += 1;
-                }
-
-
-
-
-                if (rightPressed) {
-                    if (circle1.x + circle1.radius < 0.5 * innerWidth - 5 && (circle3.x - circle3.radius - circle1.x + circle1.radius > 5 || circle3.x - circle3.radius - circle1.x + circle1.radius < 0)) {
-                        circle1.update();
-                        circle1.x += 5;
-                        circle1.velocity.x = 1;
-
-
-                    } else if (circle3.x - circle3.radius - circle1.x + circle1.radius < 5) {
-                        resolveCollisions(circle1, circle3);
+                    this.x = circle1.x + circle3.radius;
+                    this.y = circle1.y;
+                    this.velocity.x = 10;
+                    if (this.y > circle1.y) {
+                        this.velocity.y = 5;
+                    } else {
+                        this.velocity.y = -5;
                     }
-                    // if (circle3.x - circle3.radius - circle1.x + circle1.radius > 5 && circle3.x > circle1.x) {
-                    //     circle1.x += 5;
-
-                    // }
-                    // if (0.5 * innerWidth - circle1.x - circle1.radius < 5) {
-                    //     circle1.x = 0.5 * innerWidth - circle1.radius;
-                    //     circle1.velocity.x = 0.5 * innerWidth - circle1.x - circle1.radius;
-                    //     circle1.update();
-                    // } else {
-                    //     circle1.velocity.x = 5;
-                    //     circle1.update();
-
-                    // }
                 }
-                if (leftPressed) {
-                    if (circle1.x - circle1.radius > 5 && (circle1.x - circle1.radius + circle3.x - circle3.radius > 5 || circle1.x - circle1.radius + circle3.x - circle3.radius < 0)) {
-                        circle1.update();
-                        circle1.x -= 5;
-                        circle1.velocity.x = -1;
 
 
-                    } else if (circle1.x - circle1.radius + circle3.x - circle3.radius < 5) {
-                        resolveCollisions(circle1, circle3);
-                    }
-                    // if (circle1.x - circle1.radius - circle3.x + circle3.radius > 5 && circle3.x < circle1.x) {
-                    //     circle1.x -= 5;
-                    // }
-                    // if (circle1.x - circle1.radius < 5) {
-                    //     circle1.x = circle1.radius;
-                    //     circle1.velocity.x = circle1.radius - circle1.x - 1;
-                    //     circle1.update();
-                    // } else {
-                    //     circle1.velocity.x = -5;
-                    //     circle1.update();
-                    // }
 
-                }
+
+                // if (rightPressed) {
+                //     if (circle1.x + circle1.radius < 0.5 * innerWidth - 5 && (circle3.x - circle3.radius - circle1.x + circle1.radius > 5 || circle3.x - circle3.radius - circle1.x + circle1.radius < 0)) {
+                //         circle1.update();
+                //         circle1.x += 5;
+                //         circle1.velocity.x = 1;
+
+
+                //     } else if (circle3.x - circle3.radius - circle1.x + circle1.radius < 5) {
+                //         resolveCollisions(circle1, circle3);
+                //     }
+                //     // if (circle3.x - circle3.radius - circle1.x + circle1.radius > 5 && circle3.x > circle1.x) {
+                //     //     circle1.x += 5;
+
+                //     // }
+                //     // if (0.5 * innerWidth - circle1.x - circle1.radius < 5) {
+                //     //     circle1.x = 0.5 * innerWidth - circle1.radius;
+                //     //     circle1.velocity.x = 0.5 * innerWidth - circle1.x - circle1.radius;
+                //     //     circle1.update();
+                //     // } else {
+                //     //     circle1.velocity.x = 5;
+                //     //     circle1.update();
+
+                //     // }
+                // }
+                // if (leftPressed) {
+                //     if (circle1.x - circle1.radius > 5 && (circle1.x - circle1.radius + circle3.x - circle3.radius > 5 || circle1.x - circle1.radius + circle3.x - circle3.radius < 0)) {
+                //         circle1.update();
+                //         circle1.x -= 5;
+                //         circle1.velocity.x = -1;
+
+
+                //     } else if (circle1.x - circle1.radius + circle3.x - circle3.radius < 5) {
+                //         resolveCollisions(circle1, circle3);
+                //     }
+                //     // if (circle1.x - circle1.radius - circle3.x + circle3.radius > 5 && circle3.x < circle1.x) {
+                //     //     circle1.x -= 5;
+                //     // }
+                //     // if (circle1.x - circle1.radius < 5) {
+                //     //     circle1.x = circle1.radius;
+                //     //     circle1.velocity.x = circle1.radius - circle1.x - 1;
+                //     //     circle1.update();
+                //     // } else {
+                //     //     circle1.velocity.x = -5;
+                //     //     circle1.update();
+                //     // }
+
+                // }
                 if (downPressed) {
                     if (circle1.y + circle1.radius < innerHeight - 5 && (circle3.y + circle3.radius - circle1.y + circle1.radius > 5 || circle3.y + circle3.radius - circle1.y + circle1.radius < 0)) {
                         circle1.update();
-                        circle1.y += 5;
+                        circle1.y += 10;
                         circle1.velocity.y = 1;
 
                     } else if (circle3.y + circle3.radius - circle1.y + circle1.radius < 5) {
@@ -160,7 +206,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     if (circle1.y - circle1.radius > 5 && (circle1.y + circle1.radius - circle3.y + circle3.radius > 5 || circle1.y + circle1.radius - circle3.y + circle3.radius < 0)) {
                         circle1.update();
                         circle1.velocity.y = -1;
-                        circle1.y -= 5;
+                        circle1.y -= 10;
 
 
                     } else if (circle1.y + circle1.radius - circle3.y + circle3.radius < 5) {
@@ -181,10 +227,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 //     circle1.velocity.x = -0.5 * Math.sqrt(50);
                 // } 
 
-                if (upPressed === true && rightPressed === true) {
-                    circle1.y -= 1;
-                    circle1.x += 1;
-                } else {
+                // if (upPressed === true && rightPressed === true) {
+                //     circle1.y -= 1;
+                //     circle1.x += 1;
+                // }
+                else {
                     circle1.velocity.x = 0;
                     circle1.velocity.y = 0;
                     circle1.update();
@@ -196,26 +243,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                 // Player 2 control functions
-                if (rightPressed2) {
+                // if (rightPressed2) {
 
-                    circle2.velocity.x = 5;
-                    circle2.update();
-                } else if (leftPressed2) {
+                //     circle2.velocity.x = 5;
+                //     circle2.update();
+                // } else if (leftPressed2) {
 
-                    circle2.velocity.x = -5;
-                    circle2.update();
+                //     circle2.velocity.x = -5;
+                //     circle2.update();
 
 
-                }
+                // }
                 if (downPressed2) {
 
-                    circle2.velocity.y = 5;
+                    circle2.velocity.y = 10;
                     circle2.update();
 
 
                 } else if (upPressed2) {
 
-                    circle2.velocity.y = -5;
+                    circle2.velocity.y = -10;
                     circle2.update();
 
                 } else {
@@ -224,14 +271,22 @@ document.addEventListener("DOMContentLoaded", function () {
                     circle2.update();
 
                 }
-                for (let i = 0; i < circles.length; i++) {
-                    if (this === circles[i]) continue;
-                    if (getDistance(this.x, this.y, circles[i].x, circles[i].y) <= this.radius + circles[i].radius) {
-
-                        resolveCollisions(this, circles[i]);
-
-                    }
+                if (getDistance(circle1.x, circle1.y, circle3.x, circle3.y) <= circle1.radius + circle3.radius) {
+                    nonElasticCollisions(circle1, circle3)
                 }
+
+                if (getDistance(circle2.x, circle2.y, circle3.x, circle3.y) <= circle2.radius + circle3.radius) {
+                    nonElasticCollisions(circle2, circle3)
+                }
+
+                // for (let i = 0; i < circles.length; i++) {
+                //     if (this === circles[i]) continue;
+                //     if (getDistance(this.x, this.y, circles[i].x, circles[i].y) <= this.radius + circles[i].radius) {
+
+                //         resolveCollisions(this, circles[i]);
+
+                //     }
+                // }
             }
 
 
@@ -242,7 +297,7 @@ document.addEventListener("DOMContentLoaded", function () {
             d.font = "30px Arial";
             d.fillText(`${player1} `, 0.5 * innerWidth -
                 170, 50);
-
+            e.globalCompositeOperation = 'source-over';
             e.fillStyle = 'red';
             e.font = "30px Arial";
             e.fillText(`${player1Score} - ${player2Score} `, 0.5 * innerWidth - 30, 50);
@@ -284,6 +339,36 @@ document.addEventListener("DOMContentLoaded", function () {
     /*
     This function provides the mathematical basis for elastic collisions (no loss of energy in the system) between any two circles
     */
+
+    function nonElasticCollisions(circle1, circle2) {
+        const xVelocityDiff = circle1.velocity.x - circle2.velocity.x;
+        const yVelocityDiff = circle1.velocity.y - circle2.velocity.y;
+
+        const xDist = circle2.x - circle1.x;
+        const yDist = circle2.y - circle1.y;
+
+        circle2XDist1 = circle2.x - circle2.radius;
+        circle2XDist2 = innerWidth - circle2.x + circle2.radius;
+        circle2YDist1 = circle2.y - circle2.radius;
+        circle2YDist2 = innerHeight - circle2.y + circle2.radius;
+
+
+
+        // Prevent Circles from overlapping
+
+
+        if (circle2XDist1 < circle2.velocity.x) {
+            circle2.velocity.x = circle2XDist1;
+        }
+        if (circle2XDist2 < circle2.velocity.x) {
+            circle2.velocity.x = circle2XDist2;
+        }
+        if (xVelocityDiff * xDist + yVelocityDiff * yDist >= 0) {
+            circle2.velocity.x = -circle2.velocity.x * 1.05;
+        }
+
+    }
+
     function resolveCollisions(circle1, circle2) {
         const xVelocityDiff = circle1.velocity.x - circle2.velocity.x;
         const yVelocityDiff = circle1.velocity.y - circle2.velocity.y;
