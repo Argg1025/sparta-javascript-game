@@ -56,14 +56,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         this.update = function () {
 
-            for (let i = 0; i < circles.length; i++) {
-                if (this === circles[i]) continue;
-                if (getDistance(this.x, this.y, circles[i].x, circles[i].y) <= this.radius + circles[i].radius) {
 
-                    resolveCollisions(this, circles[i]);
-
-                }
-            }
 
 
             // Implemented the scoring function and collision detection against the boundaries for each circle here
@@ -97,10 +90,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                 if (rightPressed) {
-                    if (circle1.x + circle1.radius < 0.5 * innerWidth - 5) {
-                        circle1.x += 5;
+                    if (circle1.x + circle1.radius < 0.5 * innerWidth - 5 && (circle3.x - circle3.radius - circle1.x + circle1.radius > 5 || circle3.x - circle3.radius - circle1.x + circle1.radius < 0)) {
                         circle1.update();
+                        circle1.x += 5;
+                        circle1.velocity.x = 1;
+
+
+                    } else if (circle3.x - circle3.radius - circle1.x + circle1.radius < 5) {
+                        resolveCollisions(circle1, circle3);
                     }
+                    // if (circle3.x - circle3.radius - circle1.x + circle1.radius > 5 && circle3.x > circle1.x) {
+                    //     circle1.x += 5;
+
+                    // }
                     // if (0.5 * innerWidth - circle1.x - circle1.radius < 5) {
                     //     circle1.x = 0.5 * innerWidth - circle1.radius;
                     //     circle1.velocity.x = 0.5 * innerWidth - circle1.x - circle1.radius;
@@ -110,11 +112,20 @@ document.addEventListener("DOMContentLoaded", function () {
                     //     circle1.update();
 
                     // }
-                } else if (leftPressed) {
-                    if (circle1.x - circle1.radius > 5) {
-                        circle1.x -= 5;
+                }
+                if (leftPressed) {
+                    if (circle1.x - circle1.radius > 5 && (circle1.x - circle1.radius + circle3.x - circle3.radius > 5 || circle1.x - circle1.radius + circle3.x - circle3.radius < 0)) {
                         circle1.update();
+                        circle1.x -= 5;
+                        circle1.velocity.x = -1;
+
+
+                    } else if (circle1.x - circle1.radius + circle3.x - circle3.radius < 5) {
+                        resolveCollisions(circle1, circle3);
                     }
+                    // if (circle1.x - circle1.radius - circle3.x + circle3.radius > 5 && circle3.x < circle1.x) {
+                    //     circle1.x -= 5;
+                    // }
                     // if (circle1.x - circle1.radius < 5) {
                     //     circle1.x = circle1.radius;
                     //     circle1.velocity.x = circle1.radius - circle1.x - 1;
@@ -126,8 +137,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 }
                 if (downPressed) {
-                    if (circle1.y + circle1.radius < innerHeight - 5) {
+                    if (circle1.y + circle1.radius < innerHeight - 5 && (circle3.y + circle3.radius - circle1.y + circle1.radius > 5 || circle3.y + circle3.radius - circle1.y + circle1.radius < 0)) {
+                        circle1.update();
                         circle1.y += 5;
+                        circle1.velocity.y = 1;
+
+                    } else if (circle3.y + circle3.radius - circle1.y + circle1.radius < 5) {
+                        circle1.update();
                     }
                     // if (innerHeight - circle1.y - circle1.radius < 5) {
                     //     circle1.y = innerHeight - circle1.radius - 1;
@@ -139,9 +155,16 @@ document.addEventListener("DOMContentLoaded", function () {
                     // }
 
 
-                } else if (upPressed) {
-                    if (circle1.y - circle1.radius > 5) {
+                }
+                if (upPressed) {
+                    if (circle1.y - circle1.radius > 5 && (circle1.y + circle1.radius - circle3.y + circle3.radius > 5 || circle1.y + circle1.radius - circle3.y + circle3.radius < 0)) {
+                        circle1.update();
+                        circle1.velocity.y = -1;
                         circle1.y -= 5;
+
+
+                    } else if (circle1.y + circle1.radius - circle3.y + circle3.radius < 5) {
+                        circle1.update();
                     }
                     // if (circle1.y - circle1.radius < 5) {
                     //     circle1.y = circle1.radius + 1;
@@ -153,9 +176,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     // }
 
                 }
-                if (upPressed && rightPressed) {
-                    circle1.velocity.y = -0.5 * Math.sqrt(50);
-                    circle1.velocity.x = -0.5 * Math.sqrt(50);
+                // if (upPressed && rightPressed) {
+                //     circle1.velocity.y = -0.5 * Math.sqrt(50);
+                //     circle1.velocity.x = -0.5 * Math.sqrt(50);
+                // } 
+
+                if (upPressed === true && rightPressed === true) {
+                    circle1.y -= 1;
+                    circle1.x += 1;
                 } else {
                     circle1.velocity.x = 0;
                     circle1.velocity.y = 0;
@@ -195,6 +223,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     circle2.velocity.y = 0;
                     circle2.update();
 
+                }
+                for (let i = 0; i < circles.length; i++) {
+                    if (this === circles[i]) continue;
+                    if (getDistance(this.x, this.y, circles[i].x, circles[i].y) <= this.radius + circles[i].radius) {
+
+                        resolveCollisions(this, circles[i]);
+
+                    }
                 }
             }
 
@@ -243,6 +279,7 @@ document.addEventListener("DOMContentLoaded", function () {
         };
         return rotationalVelocities
     }
+
 
     /*
     This function provides the mathematical basis for elastic collisions (no loss of energy in the system) between any two circles
