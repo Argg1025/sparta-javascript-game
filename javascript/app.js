@@ -104,6 +104,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
             }
             if (this === circles[2]) {
+                if (this.velocity.y > innerHeight - this.y + this.radius && innerHeight - this.y + this.radius < 10 || this.y + this.radius > innerHeight) {
+                    this.velocity.y = -5;
+                }
+
+                if (this.velocity.y > this.y - this.radius && this.y - this.radius < 10 || this.y - this.radius < 0) {
+                    this.velocity.y = 5;
+                }
                 if (this.x + this.radius > innerWidth) {
                     this.velocity.x = -this.velocity.x
                     player1Score += 1;
@@ -272,11 +279,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 }
                 if (getDistance(circle1.x, circle1.y, circle3.x, circle3.y) <= circle1.radius + circle3.radius) {
-                    nonElasticCollisions(circle1, circle3)
+                    nonElasticCollisions(circle1, circle3);
+                    // resolveCollisions(circle1, circle3);
+
                 }
 
                 if (getDistance(circle2.x, circle2.y, circle3.x, circle3.y) <= circle2.radius + circle3.radius) {
-                    nonElasticCollisions(circle2, circle3)
+                    nonElasticCollisions(circle2, circle3);
+                    // resolveCollisions(circle1, circle3);
                 }
 
                 // for (let i = 0; i < circles.length; i++) {
@@ -363,8 +373,12 @@ document.addEventListener("DOMContentLoaded", function () {
         if (circle2XDist2 < circle2.velocity.x) {
             circle2.velocity.x = circle2XDist2;
         }
+
         if (xVelocityDiff * xDist + yVelocityDiff * yDist >= 0) {
             circle2.velocity.x = -circle2.velocity.x * 1.05;
+            if (circle2.y + circle2.radius + circle1.y - circle1.radius < 0 || circle1.y - circle1.radius - circle2.y + circle2.radius < 0) {
+                circle2.velocity.y = -circle2.velocity.y
+            }
         }
 
     }
@@ -387,26 +401,27 @@ document.addEventListener("DOMContentLoaded", function () {
             const m2 = circle2.mass;
 
             // Initial velocity (prior to collision)
-            const u1 = rotate(circle1.velocity, angle);
+            // const u1 = rotate(circle1.velocity, angle);
             const u2 = rotate(circle2.velocity, angle);
 
             // Velocities after the collision. This uses the One-dimensional Newtonian and takes into account the conservation of momentum between the circles during a collision
-            const v1 = {
-                x: u1.x * (m1 - m2) / (m1 + m2) + u2.x * 2 * m2 / (m1 + m2),
-                y: u1.y
-            };
+            // const v1 = {
+            //     x: u1.x * (m1 - m2) / (m1 + m2) + u2.x * 2 * m2 / (m1 + m2),
+            //     y: u1.y
+            // };
             const v2 = {
-                x: u2.x * (m1 - m2) / (m1 + m2) + u1.x * 2 * m2 / (m1 + m2),
+                // x: u2.x * (m1 - m2) / (m1 + m2) + u1.x * 2 * m2 / (m1 + m2),
+                x: -u2.x,
                 y: u2.y
             };
 
             // Final velocity after rotating back to original location
-            const vFinal1 = rotate(v1, -angle);
+            // const vFinal1 = rotate(v1, -angle);
             const vFinal2 = rotate(v2, -angle);
 
             // Swap circle velocities for bounce effect
-            circle1.velocity.x = vFinal1.x;
-            circle1.velocity.y = vFinal1.y;
+            // circle1.velocity.x = vFinal1.x;
+            // circle1.velocity.y = vFinal1.y;
 
             circle2.velocity.x = vFinal2.x;
             circle2.velocity.y = vFinal2.y;
