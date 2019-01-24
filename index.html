@@ -6,13 +6,34 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Air Hockey</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Baloo+Thambi" rel="stylesheet">
+
     <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
+
     <script src="javascript/app2.js"></script>
 </head>
 
 <body>
 
-    <canvas>
+    <div id="start">
+        Press here to start game
+        <h1 id="heading">
+            Instructions
+        </h1>
+        <p id="para">
+            Each player must try to score in the opposite players goal (indicated by the semi-circles either
+            side), first to three goals wins.<br>
+            <br>
+            Player 1 controls: 'w' = up, 's' = down, 'a' = left and 'd' = right. <br>
+            <br>
+            Player 2 controls: 'i' = up, 'k' = down, 'j' = left and 'l' = right.
+        </p>
+    </div>
+
+    <div id="restart">
+        Press here to restart.
+    </div>
+    <canvas id="canvas">
 
     </canvas>
 

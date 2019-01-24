@@ -1,8 +1,26 @@
+html {
+    font-family: 'Baloo Thambi', cursive;
+
+}
+
 body {
     margin: 0;
 }
 
+#start {
+    border: black 1px solid;
+
+}
+
+#restart {
+    display: none;
+    text-align: center;
+    font-size: 50px;
+    transform: translateY(-1000);
+}
+
 canvas {
+    display: none;
     border: 1px solid black;
     height: 100%;
     width: 100%;
