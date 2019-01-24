@@ -629,7 +629,7 @@ document.addEventListener("DOMContentLoaded", function () {
         drawRink();
 
         //Control Functionality. In this case it adds a velocity depending on which control is pressed. For player 1.
-
+        circle1.update();
         circle2.update();
         circle3.update();
     };
