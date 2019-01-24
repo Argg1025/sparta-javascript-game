@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }
 
-    function Circle(x, y, dx, dy, radius, mass) {
+    function Circle(x, y, dx, dy, radius, mass, color) {
         this.x = x;
         this.y = y;
         this.velocity = {
@@ -55,6 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
         };
         this.radius = radius;
         this.mass = mass;
+        this.color = color;
 
         circles.push(this);
 
@@ -63,12 +64,19 @@ document.addEventListener("DOMContentLoaded", function () {
             c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
             c.strokeStyle = 'blue';
             c.lineWidth = 0.01;
-            c.fillStyle = 'green';
+            c.fillStyle = this.color;
             c.globalCompositeOperation = 'destination-over';
             c.fill();
             c.stroke();
         }
 
+
+        // This function calcualtes the distance between two circles
+        function getDistance(x1, y1, x2, y2) {
+            let xDist = x2 - x1;
+            let yDist = y2 - y1;
+            return Math.sqrt(Math.pow(xDist, 2) + Math.pow(yDist, 2))
+        }
 
 
         // Drawing on the air hockey rink with canvas
@@ -238,7 +246,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     }
                     if (downPressed) {
-                        if (circle1.y + circle1.radius < innerHeight - circle3.radius) {
+                        if (circle1.y + circle1.radius < innerHeight) {
                             circle1.update();
                             circle1.velocity.y = 3;
 
@@ -277,7 +285,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             circle1.x -= 2;
                         }
                     }
-                    if (circle1.y + circle1.radius < innerHeight - circle3.radius) {
+                    if (circle1.y + circle1.radius < innerHeight - circle3.radius + 10) {
                         if (downPressed === true && rightPressed === true) {
                             upPressed = false;
                             leftPressed = false;
@@ -296,8 +304,8 @@ document.addEventListener("DOMContentLoaded", function () {
                         }
                     } else {
                         circle1.update();
-                        circle1.velocity.x = 2;
-                        circle1.velocity.y = 2;
+                        circle1.velocity.x = 0;
+                        circle1.velocity.y = 0;
 
                     }
                 }
@@ -327,7 +335,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                     if (downPressed2) {
 
-                        if (circle2.y + circle2.radius < innerHeight - circle3.radius) {
+                        if (circle2.y + circle2.radius < innerHeight - circle3.radius - 10) {
                             circle2.update();
                             // circle2.y += 5;
                             circle2.velocity.y = 3;
@@ -411,7 +419,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         circles[i].velocity.x = 0;
                         circles[i].velocity.y = 0;
                         document.getElementById('restart').style.display = 'block';
-                        document.getElementById('restart').innerText = "Player 1 wins! Press here to start a new game."
+                        document.getElementById('restart').innerText = "Player 1 wins! Press here to return to the menu."
 
                     }
                 }
@@ -420,7 +428,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         circles[i].velocity.x = 0;
                         circles[i].velocity.y = 0;
                         document.getElementById('restart').style.display = 'block';
-                        document.getElementById('restart').innerText = "Player 2 wins! Press here to start a new game."
+                        document.getElementById('restart').innerText = "Player 2 wins! Press here to return to the menu."
 
                     }
                 }
@@ -430,15 +438,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // player2
             d.globalCompositeOperation = 'source-over';
-            d.fillStyle = 'blue';
-            d.font = "50px Arial";
+            d.fillStyle = 'purple';
+            d.font = "50px Baloo Thambi";
             d.fillText(`${player1Score} `, 0.5 * innerWidth -
                 170, 50);
             f.globalCompositeOperation = 'source-over';
-            f.fillStyle = 'red';
-            f.font = "50px Arial";
+            f.fillStyle = 'green';
+            f.font = "50px Baloo Thambi";
             f.fillText(`${player2Score}`, 0.5 * innerWidth + 150, 50);
 
+            if (enterPressed) {
+                document.location.reload();
+            }
 
 
 
@@ -526,9 +537,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Instantiating the circles
     let circles = [];
-    const circle1 = new Circle(150, 0.5 * innerHeight, 2, 2, 100, 1000);
-    const circle2 = new Circle(innerWidth - 150, 0.5 * innerHeight, -2, -2, 100, 1000);
-    const circle3 = new Circle(0.5 * innerWidth, 0.5 * innerHeight, -5, 1, 50, 1);
+    const circle1 = new Circle(150, 0.5 * innerHeight, 2, 2, 75, 1000, "purple");
+    const circle2 = new Circle(innerWidth - 150, 0.5 * innerHeight, -2, -2, 75, 1000, "green");
+    const circle3 = new Circle(0.5 * innerWidth, 0.5 * innerHeight, -5, 1, 35, 1, "red");
 
     // Initial declaration bool for keyboard controls
     let rightPressed = false,
@@ -601,6 +612,15 @@ document.addEventListener("DOMContentLoaded", function () {
             upPressed2 = false;
         }
     }
+    let enterPressed = false;
+    document.addEventListener('keydown',
+
+        function mainMenu(e) {
+            if (e.keyCode === 13) {
+                enterPressed = true;
+            }
+        })
+
 
     // Eventlistener to display canvas
     document.getElementById('start').addEventListener('click', function (e) {
@@ -633,12 +653,8 @@ document.addEventListener("DOMContentLoaded", function () {
         circle2.update();
         circle3.update();
     };
+
+    // Declaration of Player Scores
     let player1Score = 0,
         player2Score = 0;
-
-    function getDistance(x1, y1, x2, y2) {
-        let xDist = x2 - x1;
-        let yDist = y2 - y1;
-        return Math.sqrt(Math.pow(xDist, 2) + Math.pow(yDist, 2))
-    }
 }); //DOMContentLoaded End

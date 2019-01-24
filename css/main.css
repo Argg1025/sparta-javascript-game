@@ -5,10 +5,22 @@ html {
 
 body {
     margin: 0;
+    background: #A5F2F3;
+}
+
+h1 {
+    text-align: center;
 }
 
 #start {
-    border: black 1px solid;
+    margin-top: 50px;
+    margin-left: 400px;
+    border: blue 4px solid;
+    border-radius: 6px;
+    padding: 0 100px;
+    width: 33.4%;
+    background: white;
+    color: red;
 
 }
 
@@ -16,7 +28,7 @@ body {
     display: none;
     text-align: center;
     font-size: 50px;
-    transform: translateY(-1000);
+
 }
 
 canvas {
@@ -24,5 +36,12 @@ canvas {
     border: 1px solid black;
     height: 100%;
     width: 100%;
-    background-image: url();
+    background-color: whitesmoke;
+    ;
+}
+
+img {
+    height: 250px;
+    width: 370px;
+    /* transform: translateX(50px); */
 }
