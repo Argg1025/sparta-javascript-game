@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
     canvas.height = window.innerHeight;
 
     const c = canvas.getContext('2d');
+
     const d = canvas.getContext('2d');
     const f = canvas.getContext('2d');
 
@@ -47,6 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function Circle(x, y, dx, dy, radius, mass, color) {
+
         this.x = x;
         this.y = y;
         this.velocity = {
@@ -55,20 +57,25 @@ document.addEventListener("DOMContentLoaded", function () {
         };
         this.radius = radius;
         this.mass = mass;
+
         this.color = color;
 
         circles.push(this);
+
 
         this.drawCircle = function () {
             c.beginPath();
             c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
             c.strokeStyle = 'blue';
+
             c.lineWidth = 0.01;
             c.fillStyle = this.color;
             c.globalCompositeOperation = 'destination-over';
+
             c.fill();
             c.stroke();
         }
+
 
 
         // This function calcualtes the distance between two circles
@@ -463,6 +470,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         }
 
+
     }
 
 
@@ -480,9 +488,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 
+
     /*
     This function provides the mathematical basis for elastic collisions (no loss of energy in the system) between any two circles
     */
+
 
 
     function resolveCollisions(circle1, circle2) {
@@ -537,19 +547,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Instantiating the circles
     let circles = [];
+
     const circle1 = new Circle(150, 0.5 * innerHeight, 2, 2, 75, 1000, "purple");
     const circle2 = new Circle(innerWidth - 150, 0.5 * innerHeight, -2, -2, 75, 1000, "green");
     const circle3 = new Circle(0.5 * innerWidth, 0.5 * innerHeight, -5, 1, 35, 1, "red");
+
 
     // Initial declaration bool for keyboard controls
     let rightPressed = false,
         leftPressed = false,
         upPressed = false,
+
         downPressed = false,
         rightPressed2 = false,
         leftPressed2 = false,
         upPressed2 = false,
         downPressed2 = false;
+
 
 
     // Using an event listener to add controls for the circles velocity. Firstly, for pressing the button down.
@@ -582,6 +596,7 @@ document.addEventListener("DOMContentLoaded", function () {
             upPressed = false;
         }
     }
+
 
     document.addEventListener('keydown', press2)
     // Player 2 controls
@@ -638,6 +653,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.location.reload();
     })
 
+
     function animate() {
         requestAnimationFrame(animate);
         c.clearRect(0, 0, innerWidth, innerHeight);
@@ -645,6 +661,7 @@ document.addEventListener("DOMContentLoaded", function () {
         circle1.drawCircle();
         circle2.drawCircle();
         circle3.drawCircle();
+
 
         drawRink();
 
@@ -657,4 +674,5 @@ document.addEventListener("DOMContentLoaded", function () {
     // Declaration of Player Scores
     let player1Score = 0,
         player2Score = 0;
+
 }); //DOMContentLoaded End
