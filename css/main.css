@@ -43,5 +43,5 @@ canvas {
 img {
     height: 250px;
     width: 370px;
-    /* transform: translateX(50px); */
+    transform: translateX(70px);
 }
