@@ -23,4 +23,4 @@ The functionality has been implemented using the following features:
 
 **Demo site**
 
-<argg1025.github.io/sparta-javascript-game/>
+<https://argg1025.github.io/sparta-javascript-game/>
