@@ -19,7 +19,7 @@ The functionality has been implemented using the following features:
 
 **Issues**
 
-[all](#sparta-javascript-game/issues)
+<https://github.com/Argg1025/sparta-javascript-game/issues>
 
 **Demo site**
 
